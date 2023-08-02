@@ -2,6 +2,9 @@
 /dist
 /node_modules
 
+# TS
+/tsconfig.tsbuildinfo
+
 # OS
 .DS_Store
 
@@ -23,3 +26,6 @@
 
 # Environment
 .env
+
+# Data
+/storage
