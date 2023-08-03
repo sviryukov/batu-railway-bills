@@ -1,9 +1,4 @@
-# compiled output
-/dist
 /node_modules
-
-# TS
-/tsconfig.tsbuildinfo
 
 # OS
 .DS_Store
