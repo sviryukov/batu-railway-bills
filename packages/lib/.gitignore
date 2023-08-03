@@ -3,3 +3,6 @@
 
 # TS
 /tsconfig.tsbuildinfo
+
+# dependencies
+/node_modules
