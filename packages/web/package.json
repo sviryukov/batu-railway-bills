@@ -1,0 +1,45 @@
+{
+  "name": "batu-railway-bills-web",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "dev": "react-scripts start",
+    "build": "react-scripts build"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-helmet": "^6.1.0",
+    "typescript": "^5.1.6"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.18",
+    "@types/react-dom": "^18.2.7",
+    "@types/react-helmet": "^6.1.6",
+    "eslint-config-react-app": "^7.0.1",
+    "eslint-plugin-unused-imports": "^3.0.0",
+    "lint-staged": "^13.2.3",
+    "prettier": "^3.0.1",
+    "react-scripts": "^5.0.1"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --fix"
+    ],
+    "*.{js,json,jsx,ts,tsx,css,scss,md}": [
+      "prettier --write"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
