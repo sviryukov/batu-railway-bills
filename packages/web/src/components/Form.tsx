@@ -64,13 +64,10 @@ export function Form() {
         status: 'loading',
       });
 
-      const response = await fetch(
-        'http://localhost:3001/createAllContainersPDF',
-        {
-          body: formData,
-          method: 'post',
-        },
-      );
+      const response = await fetch('/api/createAllContainersPDF', {
+        body: formData,
+        method: 'post',
+      });
       const file = await response.blob();
 
       const anchorElement = document.createElement('a');
