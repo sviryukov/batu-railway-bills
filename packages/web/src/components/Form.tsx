@@ -43,10 +43,7 @@ export function Form() {
 
   const [transporters, setTransporters] = useState<Transporter[]>([]);
   const onTransportersInputChange = useCallback(
-    (transporters: Transporter[]) => {
-      console.log(transporters);
-      setTransporters(transporters);
-    },
+    (transporters: Transporter[]) => setTransporters(transporters),
     [],
   );
 
