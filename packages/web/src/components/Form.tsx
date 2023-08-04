@@ -68,6 +68,16 @@ export function Form() {
         body: formData,
         method: 'post',
       });
+
+      if (response.status !== 200) {
+        setResponseState({
+          status: 'error',
+          message:
+            response.statusText || 'При генерации файла произошла ошибка',
+        });
+        return;
+      }
+
       const file = await response.blob();
 
       const anchorElement = document.createElement('a');
