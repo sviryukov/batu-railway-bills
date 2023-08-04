@@ -22,7 +22,7 @@ export type PDFPageData = {
   data: PDFDataItem[];
 };
 
-export default async function addDataToPDF(
+export async function addDataToPDF(
   doc: PDFDocument,
   dataByPages: PDFPageData[],
   font: PDFFont,

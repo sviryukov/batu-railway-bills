@@ -21,7 +21,7 @@ const TRANSPORTERS_LIST_NAME = 'Перевозчики';
 const DEFAULT_CONTAINER_PROVIDED_BY_VALUE = 'О';
 const DEFAULT_CONTAINER_AXLES_VALUE = '4';
 
-export default async function getContainersDataFromXLS(xlsxBuffer: Buffer) {
+export async function getContainersDataFromXLS(xlsxBuffer: Buffer) {
   const containers: ContainerData[] = [];
   const transporters: TransporterData[] = [];
   const { Sheets } = XLSX.read(xlsxBuffer);

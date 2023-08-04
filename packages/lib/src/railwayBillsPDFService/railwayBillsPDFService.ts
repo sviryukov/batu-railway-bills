@@ -3,7 +3,7 @@ import { PDFDocument } from 'pdf-lib';
 import PDFMerger from 'pdf-merger-js';
 import pdfParse from 'pdf-parse';
 
-import addDataToPDF, { PDFDataItem, PDFPageData } from '../utils/addDataToPDF';
+import { addDataToPDF, PDFDataItem, PDFPageData } from '../utils/addDataToPDF';
 import {
   ContainerData,
   TransporterData,
