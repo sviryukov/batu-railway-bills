@@ -1,0 +1,8 @@
+# compiled output
+/dist
+
+# TS
+/tsconfig.tsbuildinfo
+
+# dependencies
+/node_modules
