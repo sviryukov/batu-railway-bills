@@ -8,6 +8,8 @@
     "packages/web"
   ],
   "scripts": {
+    "build:all": "npm run build -w packages/lib && npm run build -w packages/api && npm run build -w packages/web",
+    "start:api": "node packages/api/dist/index",
     "postinstall": "husky install"
   },
   "devDependencies": {
