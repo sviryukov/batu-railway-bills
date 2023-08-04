@@ -7,10 +7,12 @@ import cors from 'cors';
 import express from 'express';
 import { unflatten } from 'flat';
 import multer from 'multer';
+import pino from 'pino-http';
 import * as process from 'process';
 
 const app = express();
 app.use(cors());
+app.use(pino());
 const upload = multer();
 const railwayBillsPDFService = new RailwayBillsPDFService();
 
