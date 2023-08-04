@@ -56,7 +56,7 @@ export function Form() {
   const submit = useCallback(async () => {
     const formData = new FormData();
     formData.append('dataXlsx', xlsx[0]);
-    pdfs.forEach((file) => formData.append('pdfs[]', file));
+    pdfs.forEach((file, i) => formData.append(`pdfs[${i}]`, file));
     transporters.forEach(({ name, section, stationCode }, i) => {
       formData.append(`transporters[${i}].name`, name);
       formData.append(`transporters[${i}].section`, section);
@@ -66,19 +66,26 @@ export function Form() {
       setResponseState({
         status: 'loading',
       });
+
       const response = await fetch(
         'http://localhost:3001/createAllContainersPDF',
         {
           body: formData,
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
           method: 'post',
         },
       );
       const file = await response.blob();
-      const fileUrl = window.URL.createObjectURL(file);
-      window.location.assign(fileUrl);
+
+      const anchorElement = document.createElement('a');
+      document.body.appendChild(anchorElement);
+      anchorElement.style.display = 'none';
+      const url = window.URL.createObjectURL(file);
+      anchorElement.href = url;
+      anchorElement.download = 'result.pdf';
+      anchorElement.click();
+      window.URL.revokeObjectURL(url);
+      anchorElement.remove();
+
       setResponseState({
         status: 'success',
         message: 'Файл успешно сгенерирован',
