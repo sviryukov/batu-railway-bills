@@ -62,7 +62,7 @@ export class RailwayBillsPDFService {
         pdfBuffer,
       );
       const container = containers.find(
-        ({ number }) => containerNumber === number,
+        ({ number }) => containerNumber === number?.toString().trim(),
       );
       if (!container) {
         throw new Error(`No data for container with number ${containerNumber}`);
