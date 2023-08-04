@@ -4,10 +4,7 @@ import PDFMerger from 'pdf-merger-js';
 import pdfParse from 'pdf-parse';
 
 import { addDataToPDF, PDFDataItem, PDFPageData } from '../utils/addDataToPDF';
-import {
-  ContainerData,
-  TransporterData,
-} from '../utils/getContainersDataFromXLS';
+import { ContainerData } from '../utils/getContainersDataFromXLS';
 
 export interface RailwayBillsPDFServiceOptions {
   railwayBillPDFFormat: {
@@ -35,6 +32,11 @@ const containerPropsTextOptions: {
   axles: { x: 386, y: 638 },
   weight: { x: 415, y: 638 },
 };
+export interface TransporterData {
+  name: string;
+  section: string;
+  stationCode: string;
+}
 const transporterPropsTextOptions: {
   [key in keyof TransporterData]: Omit<PDFDataItem, 'text'>;
 } = {
