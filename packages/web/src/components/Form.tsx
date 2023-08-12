@@ -73,7 +73,8 @@ export function Form() {
         setResponseState({
           status: 'error',
           message:
-            response.statusText || 'При генерации файла произошла ошибка',
+            (response.statusText && decodeURIComponent(response.statusText)) ||
+            'При генерации файла произошла ошибка',
         });
         return;
       }
@@ -97,7 +98,9 @@ export function Form() {
     } catch (e: any) {
       setResponseState({
         status: 'error',
-        message: e?.message || 'При генерации файла произошла ошибка',
+        message:
+          (e?.message && decodeURIComponent(e.message)) ||
+          'При генерации файла произошла ошибка',
       });
     }
   }, [xlsx, pdfs, transporters]);
