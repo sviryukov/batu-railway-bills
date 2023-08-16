@@ -16,7 +16,9 @@ const app = express();
 app.use(cors());
 app.use(pino());
 const upload = multer();
-const railwayBillsPDFService = new RailwayBillsPDFService();
+
+const defaultFontURL = process.env.DEFAULT_FONT_URL;
+const railwayBillsPDFService = new RailwayBillsPDFService({ defaultFontURL });
 
 app.post('/createAllContainersPDF', upload.any(), async (req, res) => {
   try {
