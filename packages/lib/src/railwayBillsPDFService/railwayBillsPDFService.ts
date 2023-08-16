@@ -4,7 +4,7 @@ import { PDFDocument } from 'pdf-lib';
 import PDFMerger from 'pdf-merger-js';
 import pdfParse from 'pdf-parse';
 
-import { addDataToPDF, PDFDataItem, PDFPageData } from '../utils/addDataToPDF';
+import { addTextToPDF, PDFPageTexts, PDFTextItem } from '../utils/addTextToPDF';
 import { ContainerData } from '../utils/getContainersDataFromXLS';
 
 export interface RailwayBillsPDFServiceOptions {
@@ -23,7 +23,7 @@ const defaultRailwayBillsPDFServiceOptions: RailwayBillsPDFServiceOptions = {
 };
 
 const containerPropsTextOptions: {
-  [key in keyof Omit<ContainerData, 'number'>]: Omit<PDFDataItem, 'text'>;
+  [key in keyof Omit<ContainerData, 'number'>]: Omit<PDFTextItem, 'text'>;
 } = {
   station: { x: 28, y: 610 },
   wagonNumber: { x: 202, y: 632.5 },
@@ -39,7 +39,7 @@ export interface TransporterData {
   stationCode: string;
 }
 const transporterPropsTextOptions: {
-  [key in keyof TransporterData]: Omit<PDFDataItem, 'text'>;
+  [key in keyof TransporterData]: Omit<PDFTextItem, 'text'>;
 } = {
   name: { x: 300, y: 275 },
   section: { x: 388, y: 275 },
@@ -93,12 +93,12 @@ export class RailwayBillsPDFService {
     );
     const font = await doc.embedFont(fontBuffer);
 
-    const data: PDFPageData[] = [];
+    const texts: PDFPageTexts[] = [];
     for (let i = 0; i < doc.getPageCount(); i += 2) {
-      const pageData: PDFPageData = { pageNumber: i, data: [] };
+      const pageTexts: PDFPageTexts = { pageNumber: i, texts: [] };
       for (const key in container) {
         if (key === 'number' || container[key] === undefined) continue;
-        pageData.data.push({
+        pageTexts.texts.push({
           ...containerPropsTextOptions[key],
           text: container[key].toString(),
         });
@@ -107,16 +107,16 @@ export class RailwayBillsPDFService {
         const transporter = transporters[i];
         for (const key in transporter) {
           if (transporter[key] === undefined) continue;
-          pageData.data.push({
+          pageTexts.texts.push({
             ...transporterPropsTextOptions[key],
             text: transporter[key].toString(),
             y: transporterPropsTextOptions[key].y - i * TRANSPORTERS_LIST_GAP,
           });
         }
       }
-      data.push(pageData);
+      texts.push(pageTexts);
     }
-    await addDataToPDF(doc, data, font);
+    await addTextToPDF(doc, texts, font);
     return doc.save();
   }
 

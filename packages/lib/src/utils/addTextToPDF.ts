@@ -11,27 +11,27 @@ const DEFAULT_FONT_COLOR: Color = {
   blue: 0,
 };
 const DEFAULT_FONT_SIZE = 8;
-export interface PDFDataItem {
+export interface PDFTextItem {
   text: string;
   x: number;
   y: number;
   style?: PDFTextStyle;
 }
-export type PDFPageData = {
+export type PDFPageTexts = {
   pageNumber: number;
-  data: PDFDataItem[];
+  texts: PDFTextItem[];
 };
 
-export async function addDataToPDF(
+export async function addTextToPDF(
   doc: PDFDocument,
-  dataByPages: PDFPageData[],
+  textsByPages: PDFPageTexts[],
   font: PDFFont,
 ) {
-  for (const { pageNumber, data } of dataByPages) {
+  for (const { pageNumber, texts } of textsByPages) {
     const page = doc.getPage(pageNumber);
     page.setFont(font);
-    for (const dataItem of data) {
-      const { text, x, y, style } = dataItem;
+    for (const textItem of texts) {
+      const { text, x, y, style } = textItem;
       page.setFontSize(style?.fontSize || DEFAULT_FONT_SIZE);
       page.setFontColor(style?.color || DEFAULT_FONT_COLOR);
       page.moveTo(x, y);
