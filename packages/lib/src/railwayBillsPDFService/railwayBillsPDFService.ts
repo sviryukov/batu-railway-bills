@@ -1,4 +1,5 @@
 import fontkit from '@pdf-lib/fontkit';
+import { merge } from 'lodash';
 import { PDFDocument } from 'pdf-lib';
 import PDFMerger from 'pdf-merger-js';
 import pdfParse from 'pdf-parse';
@@ -47,9 +48,11 @@ const transporterPropsTextOptions: {
 const TRANSPORTERS_LIST_GAP = 25;
 
 export class RailwayBillsPDFService {
-  constructor(
-    public options: RailwayBillsPDFServiceOptions = defaultRailwayBillsPDFServiceOptions,
-  ) {}
+  public options: RailwayBillsPDFServiceOptions;
+
+  constructor(options: Partial<RailwayBillsPDFServiceOptions> = {}) {
+    this.options = merge(defaultRailwayBillsPDFServiceOptions, options);
+  }
 
   async createAllContainersPDF(
     pdfBuffers: Buffer[],
