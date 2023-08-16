@@ -39,6 +39,7 @@ app.post('/createAllContainersPDF', upload.any(), async (req, res) => {
     );
     res.send(resultPDFBuffer);
   } catch (e) {
+    req.log.error(e);
     if (e?.message) res.statusMessage = encodeURIComponent(e.message);
     res.status(400).end();
   }
