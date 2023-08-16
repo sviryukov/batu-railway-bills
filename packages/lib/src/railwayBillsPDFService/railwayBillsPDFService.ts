@@ -26,8 +26,8 @@ const containerPropsTextOptions: {
   [key in keyof Omit<ContainerData, 'number'>]: Omit<PDFDataItem, 'text'>;
 } = {
   station: { x: 28, y: 610 },
-  wagonNumber: { x: 202, y: 633 },
-  wagonOwner: { x: 202, y: 621 },
+  wagonNumber: { x: 202, y: 632.5 },
+  wagonOwner: { x: 202, y: 622 },
   providedBy: { x: 335, y: 638 },
   loadCapacity: { x: 357, y: 638 },
   axles: { x: 386, y: 638 },

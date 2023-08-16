@@ -10,7 +10,7 @@ const DEFAULT_FONT_COLOR: Color = {
   green: 0,
   blue: 0,
 };
-const DEFAULT_FONT_SIZE = 7;
+const DEFAULT_FONT_SIZE = 8;
 export interface PDFDataItem {
   text: string;
   x: number;
