@@ -1,8 +1,9 @@
-import { Color, ColorTypes, PDFDocument, PDFFont } from 'pdf-lib';
+import { Color, ColorTypes, PDFDocument, PDFFont, PDFPage } from 'pdf-lib';
 
 export interface PDFTextStyle {
   fontSize?: number;
   color?: Color;
+  align?: 'center';
 }
 const DEFAULT_FONT_COLOR: Color = {
   type: ColorTypes.RGB,
@@ -15,6 +16,7 @@ export interface PDFTextItem {
   text: string;
   x: number;
   y: number;
+  containerWidth?: number;
   style?: PDFTextStyle;
 }
 export type PDFPageTexts = {
@@ -22,7 +24,7 @@ export type PDFPageTexts = {
   texts: PDFTextItem[];
 };
 
-export async function addTextToPDF(
+export function addTextToPDF(
   doc: PDFDocument,
   textsByPages: PDFPageTexts[],
   font: PDFFont,
@@ -30,12 +32,25 @@ export async function addTextToPDF(
   for (const { pageNumber, texts } of textsByPages) {
     const page = doc.getPage(pageNumber);
     page.setFont(font);
-    for (const textItem of texts) {
-      const { text, x, y, style } = textItem;
-      page.setFontSize(style?.fontSize || DEFAULT_FONT_SIZE);
-      page.setFontColor(style?.color || DEFAULT_FONT_COLOR);
-      page.moveTo(x, y);
-      page.drawText(text);
-    }
+    texts.forEach((textItem) => addTextItemToPDF(page, textItem, font));
+    texts.forEach((textItem) => addTextItemToPDF(page, textItem, font));
   }
+}
+
+export function addTextItemToPDF(
+  page: PDFPage,
+  textItem: PDFTextItem,
+  font: PDFFont,
+) {
+  const { text, x, y, containerWidth, style } = textItem;
+  const fontSize = style?.fontSize || DEFAULT_FONT_SIZE;
+  const color = style?.color || DEFAULT_FONT_COLOR;
+  page.setFontSize(fontSize);
+  page.setFontColor(color);
+  if (style?.align === 'center' && typeof containerWidth === 'number') {
+    const containerMiddle = x + containerWidth / 2;
+    const textWidth = font.widthOfTextAtSize(text, fontSize);
+    page.moveTo(containerMiddle - textWidth / 2, y);
+  } else page.moveTo(x, y);
+  page.drawText(text);
 }
