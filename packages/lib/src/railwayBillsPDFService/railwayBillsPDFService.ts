@@ -26,12 +26,32 @@ const containerPropsTextOptions: {
   [key in keyof Omit<ContainerData, 'number'>]: Omit<PDFTextItem, 'text'>;
 } = {
   station: { x: 28, y: 610 },
-  wagonNumber: { x: 202, y: 632.5 },
-  wagonOwner: { x: 202, y: 622 },
-  providedBy: { x: 335, y: 638 },
-  loadCapacity: { x: 357, y: 638 },
-  axles: { x: 386, y: 638 },
-  weight: { x: 415, y: 638 },
+  wagonNumber: {
+    x: 199,
+    y: 632.5,
+    containerWidth: 128,
+    style: { align: 'center' },
+  },
+  wagonOwner: {
+    x: 197,
+    y: 622,
+    containerWidth: 128,
+    style: { align: 'center' },
+  },
+  providedBy: {
+    x: 327,
+    y: 638,
+    containerWidth: 22,
+    style: { align: 'center' },
+  },
+  loadCapacity: {
+    x: 349,
+    y: 638,
+    containerWidth: 29,
+    style: { align: 'center' },
+  },
+  axles: { x: 378, y: 638, containerWidth: 22, style: { align: 'center' } },
+  weight: { x: 400, y: 638, containerWidth: 38, style: { align: 'center' } },
 };
 export interface TransporterData {
   name: string;
@@ -42,8 +62,13 @@ const transporterPropsTextOptions: {
   [key in keyof TransporterData]: Omit<PDFTextItem, 'text'>;
 } = {
   name: { x: 300, y: 275 },
-  section: { x: 388, y: 275 },
-  stationCode: { x: 527, y: 280 },
+  section: { x: 385, y: 275, containerWidth: 140, style: { align: 'center' } },
+  stationCode: {
+    x: 525,
+    y: 280,
+    containerWidth: 55,
+    style: { align: 'center' },
+  },
 };
 const TRANSPORTERS_LIST_GAP = 25;
 
@@ -116,7 +141,7 @@ export class RailwayBillsPDFService {
       }
       texts.push(pageTexts);
     }
-    await addTextToPDF(doc, texts, font);
+    addTextToPDF(doc, texts, font);
     return doc.save();
   }
 
