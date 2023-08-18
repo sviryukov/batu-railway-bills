@@ -21,7 +21,7 @@ export async function getContainersDataFromXLS(xlsxBuffer: Buffer) {
   const containersSheet = Sheets[CONTAINERS_LIST_NAME];
   if (!containersSheet)
     throw new Error(
-      `Failed to get data from xlsx file: no "${CONTAINERS_LIST_NAME}" sheet`,
+      `Ошибка при обработке XLSX-файла: отсутствует лист "${CONTAINERS_LIST_NAME}"`,
     );
   for (let i = 2; Boolean(containersSheet[`A${i}`]); i++) {
     containers.push({

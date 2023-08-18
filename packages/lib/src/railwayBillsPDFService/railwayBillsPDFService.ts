@@ -93,7 +93,9 @@ export class RailwayBillsPDFService {
         ({ number }) => containerNumber === number?.toString().trim(),
       );
       if (!container) {
-        throw new Error(`No data for container with number ${containerNumber}`);
+        throw new Error(
+          `Отсутствуют данные для контейнера № ${containerNumber}`,
+        );
       }
       newPdfs.push(
         await this.addContainerDataToPDF(pdfBuffer, container, transporters),
@@ -153,7 +155,7 @@ export class RailwayBillsPDFService {
       .split(' ')[0];
     if (!containerNumber) {
       throw new Error(
-        `Invalid railwayBill PDF format: no container number between "${this.options.railwayBillPDFFormat.containerNumberPreText}" and "${this.options.railwayBillPDFFormat.containerNumberPreText}"`,
+        `Неверный формат PDF-файла ЖДН: отсутствует номер контейнера между строками "${this.options.railwayBillPDFFormat.containerNumberPreText}" и "${this.options.railwayBillPDFFormat.containerNumberPreText}"`,
       );
     }
     return containerNumber.trim();
