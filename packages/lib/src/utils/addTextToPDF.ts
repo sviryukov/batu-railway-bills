@@ -33,7 +33,6 @@ export function addTextToPDF(
     const page = doc.getPage(pageNumber);
     page.setFont(font);
     texts.forEach((textItem) => addTextItemToPDF(page, textItem, font));
-    texts.forEach((textItem) => addTextItemToPDF(page, textItem, font));
   }
 }
 
