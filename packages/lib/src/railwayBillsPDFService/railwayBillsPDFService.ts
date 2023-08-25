@@ -84,27 +84,28 @@ export class RailwayBillsPDFService {
     containers: ContainerData[],
     transporters: TransporterData[],
   ) {
-    const newPdfs: Uint8Array[] = [];
-    for (const pdfBuffer of pdfBuffers) {
-      const containerNumber = await this.getContainerNumberFromBillPDF(
-        pdfBuffer,
-      );
-      const container = containers.find(
-        ({ number }) => containerNumber === number?.toString().trim(),
-      );
-      if (!container) {
-        throw new Error(
-          `Отсутствуют данные для контейнера № ${containerNumber}`,
-        );
-      }
-      newPdfs.push(
-        await this.addContainerDataToPDF(pdfBuffer, container, transporters),
-      );
-    }
     const merger = new PDFMerger();
-    for (const pdf of newPdfs) {
-      await merger.add(Buffer.from(pdf));
-    }
+    await Promise.all(
+      pdfBuffers.map((pdfBuffer) =>
+        this.getContainerNumberFromBillPDF(pdfBuffer)
+          .then((containerNumber) => {
+            const container = containers.find(
+              ({ number }) => containerNumber === number?.toString().trim(),
+            );
+            if (!container) {
+              throw new Error(
+                `Отсутствуют данные для контейнера № ${containerNumber}`,
+              );
+            }
+            return this.addContainerDataToPDF(
+              pdfBuffer,
+              container,
+              transporters,
+            );
+          })
+          .then((pdf) => merger.add(Buffer.from(pdf))),
+      ),
+    );
     return merger.saveAsBuffer();
   }
 
