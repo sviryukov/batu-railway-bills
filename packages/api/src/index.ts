@@ -1,5 +1,6 @@
 import {
   getContainersDataFromXLS,
+  getWagonsAndContainersNumbersFromXLS,
   RailwayBillsPDFService,
   TransporterData,
 } from 'batu-railway-bills-lib';
@@ -44,6 +45,22 @@ app.post('/createAllContainersPDF', upload.any(), async (req, res) => {
     res.status(400).end();
   }
 });
+
+app.get<string, { xlsxUrl: string }>(
+  '/getWagonsAndContainersNumbers',
+  async (req, res) => {
+    try {
+      if (!req.query.xlsxUrl) return res.status(400).send();
+      const xlsxDownloadResponse = await fetch(req.query.xlsxUrl.toString());
+      const xlsxBuffer = Buffer.from(await xlsxDownloadResponse.arrayBuffer());
+      res.send(getWagonsAndContainersNumbersFromXLS(xlsxBuffer));
+    } catch (e) {
+      req.log.error(e);
+      if (e?.message) res.statusMessage = encodeURIComponent(e.message);
+      res.status(400).end();
+    }
+  },
+);
 
 const port = process.env.APP_PORT || 3001;
 app.listen(port, () => {
